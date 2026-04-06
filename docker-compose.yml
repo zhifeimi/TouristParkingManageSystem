@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "TpmsStrongPass123!"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      Database__Provider: "SqlServer"
+      ConnectionStrings__TpmsDatabase: "Server=sqlserver,1433;Database=Tpms;User ID=sa;Password=TpmsStrongPass123!;TrustServerCertificate=True"
+      Jwt__Key: "TPMS-Compose-Key-Needs-To-Be-Changed"
+    ports:
+      - "5080:8080"
+    depends_on:
+      - sqlserver
+
+  edge:
+    build:
+      context: .
+      dockerfile: Dockerfile.edge
+    environment:
+      ConnectionStrings__EdgeDatabase: "Data Source=/data/edge.db"
+      Edge__CloudBaseUrl: "http://api:8080"
+      Edge__EnableMockLpr: "true"
+    ports:
+      - "5081:8080"
+    volumes:
+      - edge-data:/data
+    depends_on:
+      - api
+
+volumes:
+  sqlserver-data:
+  edge-data:

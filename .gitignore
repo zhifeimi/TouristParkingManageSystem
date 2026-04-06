@@ -52,3 +52,13 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# vscode
+.vscode/
+
+# Frontend and local runtime artifacts
+**/node_modules/
+**/dist/
+**/TestResults/
+*.db
+*.trx

@@ -1,0 +1,16 @@
+{
+  "name": "Tourist Parking Management System",
+  "short_name": "TPMS",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f0e7",
+  "theme_color": "#20453d",
+  "description": "Reserve numbered bays, track permits, and operate edge-aware park parking workflows.",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+FROM node:22-alpine AS web-build
+WORKDIR /app/src/TPMS.Web
+COPY src/TPMS.Web/package.json ./
+COPY src/TPMS.Web/tsconfig.json ./
+COPY src/TPMS.Web/tsconfig.app.json ./
+COPY src/TPMS.Web/tsconfig.node.json ./
+COPY src/TPMS.Web/vite.config.ts ./
+COPY src/TPMS.Web/index.html ./
+COPY src/TPMS.Web/public ./public
+COPY src/TPMS.Web/src ./src
+RUN npm install
+RUN npm run build
+
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+COPY . .
+RUN dotnet restore src/TPMS.Api/TPMS.Api.csproj
+RUN mkdir -p src/TPMS.Api/wwwroot
+COPY --from=web-build /app/src/TPMS.Web/dist ./src/TPMS.Api/wwwroot
+RUN dotnet publish src/TPMS.Api/TPMS.Api.csproj -c Release -o /app/publish /p:UseAppHost=false
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
+ENTRYPOINT ["dotnet", "TPMS.Api.dll"]

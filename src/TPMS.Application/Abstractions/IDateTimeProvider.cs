@@ -1,0 +1,6 @@
+namespace TPMS.Application.Abstractions;
+
+public interface IDateTimeProvider
+{
+    DateTimeOffset UtcNow { get; }
+}

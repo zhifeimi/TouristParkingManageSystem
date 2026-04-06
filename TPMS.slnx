@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TPMS.Api/TPMS.Api.csproj" />
+    <Project Path="src/TPMS.Application/TPMS.Application.csproj" />
+    <Project Path="src/TPMS.Domain/TPMS.Domain.csproj" />
+    <Project Path="src/TPMS.Edge/TPMS.Edge.csproj" />
+    <Project Path="src/TPMS.Infrastructure/TPMS.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TPMS.Application.Tests/TPMS.Application.Tests.csproj" />
+    <Project Path="tests/TPMS.Domain.Tests/TPMS.Domain.Tests.csproj" />
+    <Project Path="tests/TPMS.Infrastructure.Tests/TPMS.Infrastructure.Tests.csproj" />
+  </Folder>
+</Solution>
